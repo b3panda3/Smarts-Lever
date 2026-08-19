@@ -1,0 +1,118 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  image         String?
+  googleId      String?   @unique
+  password      String?
+  
+  // Profile fields
+  userType      String    @default("individual") // individual, teacher, school, government, group
+  organization  String?
+  ageGroup      String?   // 10-15, 16-20, 21-30, 31-40, 40+
+  city          String?
+  state         String?
+  country       String?
+  language      String?   // primary learning language (pidgin, yoruba, hausa, twi, etc.)
+  educationLevel String?  // primary, secondary, university, graduate, professional
+  
+  onboardingComplete Boolean @default(false)
+  
+  curricula     Curriculum[]
+  progress      Progress[]
+  chatMessages  ChatMessage[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Curriculum {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  title       String
+  subject     String    // Physics, Law, Chemistry, Maths, etc.
+  description String?
+  
+  // AI-generated curriculum structure (stored as JSON string)
+  modules     String    // JSON array of modules
+  
+  status      String    @default("active") // active, completed, archived
+  progress    Float     @default(0)
+  
+  lessons     Lesson[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Lesson {
+  id            String    @id @default(cuid())
+  curriculumId  String
+  curriculum    Curriculum @relation(fields: [curriculumId], references: [id])
+  
+  title         String
+  description   String?
+  orderIndex    Int
+  
+  // AI-generated lesson content in vernacular
+  contentVernacular String    // Main lesson content in user's language
+  contentEnglish   String?   // English reference version
+  
+  // References and citations
+  references    String?   // JSON array of references
+  
+  slangNotes    String?   // Explanation of slangs used
+  keyTakeaways  String?   // JSON array of key points
+  
+  status        String    @default("locked") // locked, available, in_progress, completed
+  
+  progress      Progress[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Progress {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  lessonId      String?
+  lesson        Lesson?   @relation(fields: [lessonId], references: [id])
+  
+  completed     Boolean   @default(false)
+  score         Float?
+  timeSpent     Int       @default(0) // minutes
+  notes         String?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model ChatMessage {
+  id            String    @id @default(cuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  lessonId      String?
+  
+  role          String    // user, assistant, system
+  content       String
+  
+  createdAt     DateTime  @default(now())
+}
+
+model ProfileQuestion {
+  id            String    @id @default(cuid())
+  userId        String
+  question      String
+  answer        String?
+  askedAt       DateTime  @default(now())
+  answeredAt    DateTime?
+}
