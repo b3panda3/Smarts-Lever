@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+@page {
+    size: 720px 1020px;
+    margin: 0;
+}
+:root {
+    --c-bg: #FFFFFF;
+    --c-dark: #064E3B;
+    --c-emerald: #059669;
+    --c-emerald-light: #D1FAE5;
+    --c-amber: #D97706;
+    --c-amber-light: #FEF3C7;
+    --c-warm: #FDF8F0;
+    --c-text: #1C1917;
+    --c-text-secondary: #57534E;
+    --c-border: #E7E5E4;
+    --font-sans: 'Inter', 'Liberation Sans', sans-serif;
+    --font-serif: 'Playfair Display', 'Liberation Serif', serif;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 720px;
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'Inter', 'Liberation Sans', sans-serif;
+}
+@media screen {
+    html {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        background: #e5e5e5;
+    }
+    body {
+        transform-origin: top center;
+        margin: 20px auto;
+        box-shadow: 0 4px 40px rgba(0,0,0,0.15);
+    }
+}
+
+/* ===== COVER PAGE ===== */
+.cover {
+    width: 720px;
+    height: 1020px;
+    box-sizing: border-box;
+    break-after: page;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #064E3B 0%, #059669 50%, #10B981 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+.cover-hackathon-badge {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.cover-hackathon-badge span {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 24px;
+    border-radius: 100px;
+    color: #D1FAE5;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.cover-title {
+    font-family: 'Playfair Display', 'Liberation Serif', serif;
+    font-size: 72px;
+    font-weight: 900;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 0.95;
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+}
+.cover-title span {
+    color: #FCD34D;
+}
+.cover-subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    max-width: 480px;
+    line-height: 1.6;
+    margin-bottom: 48px;
+    position: relative;
+    z-index: 2;
+}
+.cover-track {
+    display: inline-block;
+    background: rgba(217, 119, 6, 0.2);
+    padding: 10px 28px;
+    border-radius: 8px;
+    color: #FCD34D;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 2;
+}
+.cover-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+}
+.cover-footer strong {
+    color: rgba(255,255,255,0.8);
+}
+
+/* ===== MAIN CONTENT ===== */
+.main-content {
+    padding: 55px 60px 40px 60px;
+}
+
+.section-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--c-emerald);
+    margin-bottom: 8px;
+}
+.section-title {
+    font-family: 'Playfair Display', 'Liberation Serif', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--c-dark);
+    margin-bottom: 6px;
+    line-height: 1.2;
+}
+.section-divider {
+    width: 48px;
+    height: 3px;
+    background: var(--c-amber);
+    border-radius: 2px;
+    margin-bottom: 20px;
+}
+.body-text {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--c-text-secondary);
+    margin-bottom: 14px;
+}
+.body-text strong {
+    color: var(--c-text);
+}
+.chapter-header {
+    break-after: avoid;
+    break-inside: avoid;
+    margin-top: 28px;
+}
+
+/* Image styling */
+.content-image {
+    width: 100%;
+    border-radius: 12px;
+    margin: 20px 0;
+    object-fit: cover;
+}
+.content-image-small {
+    width: 48%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.image-grid-2 {
+    display: flex;
+    gap: 16px;
+    margin: 20px 0;
+}
+.image-caption {
+    font-size: 11px;
+    color: var(--c-text-secondary);
+    text-align: center;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* Stat cards */
+.stats-grid {
+    display: flex;
+    gap: 14px;
+    margin: 20px 0;
+}
+.stat-card {
+    flex: 1;
+    background: var(--c-warm);
+    border-radius: 10px;
+    padding: 18px 16px;
+    text-align: center;
+    break-inside: avoid;
+}
+.stat-number {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--c-emerald);
+    line-height: 1;
+    margin-bottom: 4px;
+}
+.stat-label {
+    font-size: 11px;
+    color: var(--c-text-secondary);
+    line-height: 1.3;
+}
+
+/* Feature cards */
+.feature-card {
+    display: flex;
+    gap: 16px;
+    background: #FAFAF9;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+    break-inside: avoid;
+    border-left: 3px solid var(--c-emerald);
+}
+.feature-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 8px;
+    background: var(--c-emerald-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.feature-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-text);
+    margin-bottom: 4px;
+}
+.feature-desc {
+    font-size: 12.5px;
+    color: var(--c-text-secondary);
+    line-height: 1.5;
+}
+
+/* How it works steps */
+.steps-grid {
+    display: flex;
+    gap: 12px;
+    margin: 16px 0;
+}
+.step-card {
+    flex: 1;
+    text-align: center;
+    break-inside: avoid;
+}
+.step-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--c-emerald);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+.step-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--c-text);
+    margin-bottom: 4px;
+}
+.step-desc {
+    font-size: 11px;
+    color: var(--c-text-secondary);
+    line-height: 1.4;
+}
+
+/* Quote block */
+.quote-block {
+    background: var(--c-emerald-light);
+    border-left: 4px solid var(--c-emerald);
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+    margin: 18px 0;
+    break-inside: avoid;
+}
+.quote-text {
+    font-family: 'Playfair Display', 'Liberation Serif', serif;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--c-dark);
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+.quote-author {
+    font-size: 12px;
+    color: var(--c-text-secondary);
+    font-weight: 500;
+}
+
+/* Language table */
+.lang-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 12.5px;
+    break-inside: avoid;
+}
+.lang-table th {
+    background: var(--c-dark);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+.lang-table th:first-child { border-radius: 6px 0 0 0; }
+.lang-table th:last-child { border-radius: 0 6px 0 0; }
+.lang-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-text-secondary);
+}
+.lang-table tr:nth-child(even) td { background: #FAFAF9; }
+
+/* Tech stack badges */
+.tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0;
+}
+.tech-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 100px;
+    font-size: 11.5px;
+    font-weight: 500;
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+    background: white;
+}
+
+/* Impact section */
+.impact-card {
+    background: linear-gradient(135deg, #064E3B, #059669);
+    border-radius: 12px;
+    padding: 22px 24px;
+    color: white;
+    margin-bottom: 12px;
+    break-inside: avoid;
+}
+.impact-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #FCD34D;
+}
+.impact-card-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+}
+
+/* SDG badge */
+.sdg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FBBF24;
+    color: #1C1917;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 14px 0;
+    break-inside: avoid;
+}
+
+/* Ending page */
+.ending {
+    width: 720px;
+    height: 1020px;
+    box-sizing: border-box;
+    break-before: page;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #064E3B 0%, #059669 50%, #10B981 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px;
+}
+.ending-title {
+    font-family: 'Playfair Display', 'Liberation Serif', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 16px;
+}
+.ending-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+.ending-cta {
+    display: inline-block;
+    background: #FCD34D;
+    color: #064E3B;
+    padding: 14px 40px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 15px;
+}
+.ending-footer {
+    position: absolute;
+    bottom: 40px;
+    text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== COVER PAGE ===== -->
+<div class="cover">
+    <div class="cover-hackathon-badge">
+        <span>Wema Bank Hackaholic 7.0 — 2026</span>
+    </div>
+
+    <div class="cover-title">Smarts<br><span>Lever</span></div>
+    <div class="cover-subtitle">
+        An AI-powered platform that teaches complex subjects in West African vernacular languages — because education should speak your language.
+    </div>
+    <div class="cover-track">Track 3: Social Impact</div>
+
+    <div class="cover-footer">
+        Built for <strong>Wema Bank Hackaholics 2026</strong> &nbsp;|&nbsp; Social Impact Track
+    </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-content">
+
+    <!-- THE PROBLEM -->
+    <div class="chapter-header">
+        <div class="section-tag">The Problem</div>
+        <div class="section-title">400 Million People, Shut Out of Their Own Education</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        Across West Africa — from the bustling streets of Lagos to the rural communities of Burkina Faso, from the coastal cities of Accra to the inland markets of Kano — over <strong>400 million people speak hundreds of indigenous languages and creoles</strong>. Pidgin English flows through Nigerian markets as the lingua franca of commerce. Yoruba proverbs carry centuries of wisdom in southwestern Nigeria. Wolof greetings shape daily life in Senegal. Twi expressions capture emotions that English simply cannot.
+    </div>
+    <div class="body-text">
+        Yet when a student in Ibadan opens a Physics textbook, every word is in English. When a teacher in Kumasi tries to explain photosynthesis, the curriculum demands French or English terminology. When an adult learner in Dakar wants to understand basic accounting, the only available resources are in colonial languages that many struggle with. This is not just an inconvenience — it is a <strong>systematic barrier to education</strong> that perpetuates inequality across generations.
+    </div>
+
+    <div class="image-grid-2">
+        <div>
+            <img src="pitch-assets/students-learning.png" class="content-image-small" alt="West African students learning together">
+            <div class="image-caption">Young learners across West Africa deserve education in their own languages</div>
+        </div>
+        <div>
+            <img src="pitch-assets/classroom-scene.png" class="content-image-small" alt="Classroom scene in West Africa">
+            <div class="image-caption">Teachers struggle with materials that ignore their students' mother tongues</div>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">400M+</div>
+            <div class="stat-label">People speak vernacular languages across West Africa</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Indigenous languages with zero educational content</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">60%</div>
+            <div class="stat-label">Higher retention when learning in one's mother tongue</div>
+        </div>
+    </div>
+
+    <div class="quote-block">
+        <div class="quote-text">"If you want to kill a people, kill their language. Education that does not speak to a child in their mother tongue is not education — it is assimilation."</div>
+        <div class="quote-author">— Adapted from Ngugi wa Thiong'o, Decolonising the Mind (1986)</div>
+    </div>
+
+    <!-- THE SOLUTION -->
+    <div class="chapter-header">
+        <div class="section-tag">The Solution</div>
+        <div class="section-title">Smarts Lever: Learn Anything, In Your Language</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        <strong>Smarts Lever</strong> is an AI-powered education platform that takes complex academic subjects and breaks them down into engaging, understandable lessons delivered in the learner's own vernacular language. Using Google's Gemini AI, the platform dynamically generates entire curricula adapted to each learner's language, cultural context, education level, and personal background — complete with local slang, cultural references, real-life analogies, and academic citations.
+    </div>
+    <div class="body-text">
+        Imagine learning Physics and your lesson explains gravity using the analogy of a Lagos danfo (bus) braking suddenly — "When danfo driver jam brake, everybody inside go slide forward. Na the same thing gravity dey do to everything wey get mass." This is not dumbed-down content; it is <strong>intelligent, culturally-rooted pedagogy</strong> that makes knowledge stick because it connects to what the learner already knows and lives every day.
+    </div>
+
+    <img src="pitch-assets/language-diversity.png" class="content-image" alt="Multilingual education visualization">
+    <div class="image-caption">Smarts Lever bridges the gap between 500+ West African languages and quality education</div>
+
+    <div class="body-text">
+        The platform serves <strong>individuals</strong> (students, self-learners, curious minds), <strong>teachers</strong> (who need vernacular teaching materials), <strong>schools</strong> (looking to supplement their curriculum), <strong>government agencies</strong> (developing public education programs), and <strong>NGOs</strong> (running community education initiatives). Every user gets a personalized experience tailored to their specific context and needs.
+    </div>
+
+    <!-- KEY FEATURES -->
+    <div class="chapter-header">
+        <div class="section-tag">Key Features</div>
+        <div class="section-title">What Makes Smarts Lever Different</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="feature-card">
+        <div class="feature-icon">L</div>
+        <div>
+            <div class="feature-title">Vernacular-First Teaching</div>
+            <div class="feature-desc">All lesson content is generated in the learner's chosen language — Pidgin, Yoruba, Hausa, Igbo, Twi, Wolof, Fanti, Bambara, and 15+ more. Slang and informal expressions are woven naturally into explanations, making complex concepts feel like a conversation with a knowledgeable friend.</div>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">C</div>
+        <div>
+            <div class="feature-title">AI-Powered Curriculum Generation</div>
+            <div class="feature-desc">Google Gemini 2.0 Flash creates structured, progressive curricula from the learner's profile. Each curriculum is broken into modules and lessons with proper sequencing, prerequisites, and difficulty progression — all in the learner's language.</div>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">R</div>
+        <div>
+            <div class="feature-title">References and Citations</div>
+            <div class="feature-desc">Every lesson includes proper academic references and citations, maintaining scholarly credibility. The platform bridges informal vernacular explanation with formal academic standards, proving that local languages can carry rigorous intellectual content.</div>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">A</div>
+        <div>
+            <div class="feature-title">Adaptive AI Tutor Chat</div>
+            <div class="feature-desc">A built-in conversational AI tutor that answers questions in the learner's vernacular, knows their current lesson context, and adjusts explanations based on their learning history. It's like having a patient tutor available 24/7 who speaks your exact language.</div>
+        </div>
+    </div>
+    <div class="feature-card">
+        <div class="feature-icon">P</div>
+        <div>
+            <div class="feature-title">Progressive Profiling</div>
+            <div class="feature-desc">The platform periodically asks contextual questions during learning to refine the user's profile. As it learns more about the learner's background, it adjusts teaching complexity, language style, and cultural references for increasingly personalized content.</div>
+        </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="chapter-header">
+        <div class="section-tag">How It Works</div>
+        <div class="section-title">Five Steps to Learning In Your Language</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <div class="step-title">Sign Up</div>
+            <div class="step-desc">Register with email or Google Sign-In. Takes 30 seconds.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <div class="step-title">Build Profile</div>
+            <div class="step-desc">5-step AI-guided onboarding captures your language, location, and subjects.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <div class="step-title">Get Curriculum</div>
+            <div class="step-desc">Gemini AI generates a personalized curriculum in your vernacular.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <div class="step-title">Learn</div>
+            <div class="step-desc">Engage with lessons, slang notes, references, and real-life examples.</div>
+        </div>
+        <div class="step-card">
+            <div class="step-number">5</div>
+            <div class="step-title">Ask &amp; Grow</div>
+            <div class="step-desc">Chat with the AI tutor, track progress, and deepen understanding.</div>
+        </div>
+    </div>
+
+    <img src="pitch-assets/mobile-learning.png" class="content-image" style="width: 55%; margin: 20px auto; display: block;" alt="Mobile learning in West Africa">
+    <div class="image-caption">A young learner in Lagos uses Smarts Lever on her phone during her daily commute</div>
+
+    <!-- SUPPORTED LANGUAGES -->
+    <div class="chapter-header">
+        <div class="section-tag">Language Coverage</div>
+        <div class="section-title">Speaking to West Africa In Its Own Voice</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        Smarts Lever supports <strong>15+ West African languages and creoles</strong> out of the box, with the ability to add any custom language a user specifies. The platform does not just translate English content — it generates original explanations that reflect how concepts would be naturally discussed in each language, incorporating local idioms, proverbs, and ways of understanding the world.
+    </div>
+
+    <table class="lang-table">
+        <tr>
+            <th>Language</th>
+            <th>Primary Countries</th>
+            <th>Speakers (est.)</th>
+        </tr>
+        <tr>
+            <td><strong>Pidgin English</strong></td>
+            <td>Nigeria, Ghana, Cameroon</td>
+            <td>75 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Yoruba</strong></td>
+            <td>Nigeria, Benin, Togo</td>
+            <td>45 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Hausa</strong></td>
+            <td>Nigeria, Niger, Ghana</td>
+            <td>80 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Wolof</strong></td>
+            <td>Senegal, Gambia, Mauritania</td>
+            <td>12 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Twi</strong></td>
+            <td>Ghana, Cote d'Ivoire</td>
+            <td>11 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Fanti</strong></td>
+            <td>Ghana</td>
+            <td>3 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Igbo</strong></td>
+            <td>Nigeria</td>
+            <td>30 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Bambara</strong></td>
+            <td>Mali, Burkina Faso, Senegal</td>
+            <td>15 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Ewe</strong></td>
+            <td>Ghana, Togo</td>
+            <td>7 million+</td>
+        </tr>
+        <tr>
+            <td><strong>Fulfulde</strong></td>
+            <td>Nigeria, Senegal, Guinea, Mali</td>
+            <td>25 million+</td>
+        </tr>
+    </table>
+
+    <!-- TECHNOLOGY -->
+    <div class="chapter-header">
+        <div class="section-tag">Technology</div>
+        <div class="section-title">Built With Modern, Scalable Tools</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        Smarts Lever is built on a modern web stack designed for rapid development and production reliability. The frontend is a <strong>Next.js 16 single-page application</strong> using TypeScript, Tailwind CSS 4, and shadcn/ui components for a professional, responsive interface. State management is handled by <strong>Zustand</strong>, with smooth transitions powered by <strong>Framer Motion</strong>. Authentication uses <strong>NextAuth.js</strong> with Google OAuth integration.
+    </div>
+    <div class="body-text">
+        The backend relies on <strong>Prisma ORM</strong> with SQLite for local data persistence and <strong>Supabase</strong> for cloud database and real-time features. The AI engine is powered by <strong>Google Gemini 2.0 Flash</strong>, which generates curricula, lesson content, and chat responses — all intelligently adapted to the learner's vernacular language and cultural context. Media assets are handled by <strong>Cloudinary</strong>, and transactional emails by <strong>Resend</strong>.
+    </div>
+
+    <div class="tech-grid">
+        <span class="tech-badge">Next.js 16</span>
+        <span class="tech-badge">TypeScript 5</span>
+        <span class="tech-badge">Tailwind CSS 4</span>
+        <span class="tech-badge">shadcn/ui</span>
+        <span class="tech-badge">Prisma ORM</span>
+        <span class="tech-badge">NextAuth.js</span>
+        <span class="tech-badge">Zustand</span>
+        <span class="tech-badge">Framer Motion</span>
+        <span class="tech-badge">Google Gemini 2.0</span>
+        <span class="tech-badge">Supabase</span>
+        <span class="tech-badge">Cloudinary</span>
+        <span class="tech-badge">Resend</span>
+    </div>
+
+    <!-- SOCIAL IMPACT -->
+    <div class="chapter-header">
+        <div class="section-tag">Social Impact</div>
+        <div class="section-title">Education That Changes Lives at Scale</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="sdg-badge">SDG 4: Quality Education</div>
+
+    <div class="body-text">
+        Smarts Lever directly contributes to the <strong>United Nations Sustainable Development Goal 4: Quality Education</strong> by addressing the fundamental barrier of language exclusion in education across West Africa. Research consistently shows that children and adults learn better, retain more, and engage more deeply when educational content is delivered in their mother tongue or primary language of daily use.
+    </div>
+
+    <div class="impact-card">
+        <div class="impact-card-title">Removing Language Barriers</div>
+        <div class="impact-card-desc">For the first time, a student in a rural village in Oyo State can learn Physics in Yoruba with the same rigor as a student in London learning in English. The platform eliminates the linguistic gatekeeping that has kept millions from accessing quality education.</div>
+    </div>
+    <div class="impact-card">
+        <div class="impact-card-title">Preserving Indigenous Languages</div>
+        <div class="impact-card-desc">By integrating vernacular languages into formal educational contexts, Smarts Lever helps preserve and elevate languages that are at risk of being lost. It sends a powerful message: your language is not inferior — it is capable of carrying the full weight of human knowledge.</div>
+    </div>
+    <div class="impact-card">
+        <div class="impact-card-title">Empowering Teachers and Schools</div>
+        <div class="impact-card-desc">Teachers in under-resourced schools across West Africa gain access to a library of culturally relevant teaching materials. Schools can adopt the platform to supplement their curriculum with content that actually speaks to their students' lived experiences.</div>
+    </div>
+    <div class="impact-card">
+        <div class="impact-card-title">Bridging the Rural-Urban Divide</div>
+        <div class="impact-card-desc">A student in a rural community with only a smartphone and internet access gets the same quality of personalized, vernacular education as a student in an elite urban school. This platform levels the playing field in a way that traditional educational infrastructure simply cannot.</div>
+    </div>
+
+    <!-- MARKET & SCALE -->
+    <div class="chapter-header">
+        <div class="section-tag">Market Potential</div>
+        <div class="section-title">A Continent-Wide Opportunity</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        West Africa's education technology market is projected to reach <strong>$4.2 billion by 2028</strong>, driven by increasing smartphone penetration (now over 50% across the region), growing internet access, and a young population hungry for knowledge. Nigeria alone has over <strong>200 million people</strong>, with 60% under the age of 25. Ghana, Senegal, Cote d'Ivoire, and other West African nations show similar demographic trends.
+    </div>
+    <div class="body-text">
+        Smarts Lever is uniquely positioned to capture this market because it addresses a need that no existing platform serves: <strong>vernacular-language education at scale</strong>. While competitors like Coursera, Udemy, and Khan Academy offer world-class content, they do so exclusively in English, French, or other colonial languages. Smarts Lever fills the massive gap between the language people speak and the language education is offered in.
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-number">$4.2B</div>
+            <div class="stat-label">Projected EdTech market in West Africa by 2028</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">200M+</div>
+            <div class="stat-label">Nigeria's population, 60% under 25</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">16</div>
+            <div class="stat-label">West African countries as primary market</div>
+        </div>
+    </div>
+
+    <!-- WHY WEMA -->
+    <div class="chapter-header">
+        <div class="section-tag">Partnership</div>
+        <div class="section-title">Why Wema Bank Should Back Smarts Lever</div>
+        <div class="section-divider"></div>
+    </div>
+
+    <div class="body-text">
+        Wema Bank has built a reputation as one of Nigeria's most innovative financial institutions, particularly through its <strong>ALAT</strong> digital banking platform and its commitment to fostering innovation through Hackaholics. Smarts Lever aligns perfectly with Wema Bank's values of <strong>inclusion, innovation, and social impact</strong> — the platform literally brings education to people who have been excluded from it due to language barriers.
+    </div>
+    <div class="body-text">
+        Beyond the hackathon, Smarts Lever represents a <strong>scalable social enterprise</strong> that could serve as a flagship impact project for Wema Bank's CSR portfolio. The platform demonstrates that AI can be deployed not just for commercial gain but for genuine social good — a narrative that strengthens Wema Bank's brand as a bank that cares about the communities it serves. With 400 million potential users across West Africa and a technology stack built for scale, the impact potential is enormous.
+    </div>
+
+</div>
+
+<!-- ===== ENDING PAGE ===== -->
+<div class="ending">
+    <div class="ending-title">Because Education<br>Should Speak<br><span style="color: #FCD34D;">Your Language.</span></div>
+    <div class="ending-subtitle">
+        Smarts Lever is more than a platform — it is a movement to decolonize education and give every West African the right to learn in the language they call home.
+    </div>
+    <div class="ending-cta">Smarts Lever</div>
+    <div class="ending-footer">
+        Wema Bank Hackaholic 7.0 — 2026 &nbsp;|&nbsp; Social Impact Track<br>
+        smarts-lever.herokuapp.com
+    </div>
+</div>
+
+</body>
+</html>

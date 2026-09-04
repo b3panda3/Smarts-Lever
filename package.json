@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
+<<<<<<< HEAD
     "build": ""build": "prisma generate && next build"",
+=======
+    "build": "prisma generate && next build",
+>>>>>>> 54fc726 (Feature update & Modification)
     "start": "next start",
     "lint": "eslint .",
     "postinstall": "prisma generate",
