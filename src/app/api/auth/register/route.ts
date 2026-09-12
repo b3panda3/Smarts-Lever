@@ -14,7 +14,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const existing = await db.user.findUnique({ where: { email } });
+    if (typeof password !== 'string' || password.length < 6) {
+      return NextResponse.json(
+        { error: 'Password must be at least 6 characters' },
+        { status: 400 }
+      );
+    }
+
+    const normalizedEmail = String(email).trim().toLowerCase();
+
+    const existing = await db.user.findUnique({ where: { email: normalizedEmail } });
     if (existing) {
       return NextResponse.json(
         { error: 'An account with this email already exists' },
@@ -26,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     const user = await db.user.create({
       data: {
-        email,
+        email: normalizedEmail,
         name: name || null,
         password: hashedPassword,
       },

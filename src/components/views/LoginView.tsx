@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { signIn } from 'next-auth/react';
 import { GraduationCap, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +18,28 @@ import {
 import { useAppStore, type UserProfile } from '@/store/useAppStore';
 import { useToast } from '@/hooks/use-toast';
 
+async function fetchMyProfile(): Promise<UserProfile | null> {
+  const res = await fetch('/api/auth/me');
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!data?.user) return null;
+  return {
+    id: data.user.id,
+    email: data.user.email,
+    name: data.user.name,
+    image: data.user.image,
+    userType: data.user.userType || 'individual',
+    organization: data.user.organization,
+    ageGroup: data.user.ageGroup,
+    city: data.user.city,
+    state: data.user.state,
+    country: data.user.country,
+    language: data.user.language,
+    educationLevel: data.user.educationLevel,
+    onboardingComplete: data.user.onboardingComplete,
+  };
+}
+
 export function LoginView() {
   const { setView, setUser } = useAppStore();
   const { toast } = useToast();
@@ -29,100 +52,50 @@ export function LoginView() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/register');
-      // For login, we use NextAuth credentials
-      const authRes = await fetch('/api/auth/callback/credentials', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, csrfToken: '' }),
+      // Proper NextAuth credentials sign-in (handles CSRF + session cookie)
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
       });
 
-      if (authRes.ok) {
-        // Check if user exists and get their profile
-        const profileRes = await fetch(`/api/curriculum/list?email=${email}`);
-        if (profileRes.ok) {
-          // User exists, set minimal profile
-          const user: UserProfile = {
-            id: '',
-            email,
-            name: email.split('@')[0],
-            userType: 'individual',
-            onboardingComplete: false,
-          };
-          setUser(user);
-
-          // Check if user has curricula (meaning onboarding was done)
-          const data = await profileRes.json();
-          if (data.curricula && data.curricula.length > 0) {
-            setView('dashboard');
-          } else {
-            setView('onboarding');
-          }
-        } else {
-          setView('onboarding');
-        }
-      } else {
-        // Simple fallback: try to find user via curriculum list
-        const profileRes = await fetch(`/api/curriculum/list?email=${email}`);
-        if (profileRes.ok) {
-          const data = await profileRes.json();
-          const user: UserProfile = {
-            id: '',
-            email,
-            name: email.split('@')[0],
-            userType: 'individual',
-            onboardingComplete: data.curricula && data.curricula.length > 0,
-          };
-          setUser(user);
-          setView(data.curricula && data.curricula.length > 0 ? 'dashboard' : 'onboarding');
-        } else {
-          toast({
-            title: 'Login failed',
-            description: 'Please check your credentials and try again.',
-            variant: 'destructive',
-          });
-        }
-      }
-    } catch {
-      // Fallback: direct login by checking user existence
-      try {
-        const profileRes = await fetch(`/api/curriculum/list?email=${email}`);
-        if (profileRes.ok) {
-          const data = await profileRes.json();
-          const user: UserProfile = {
-            id: '',
-            email,
-            name: email.split('@')[0],
-            userType: 'individual',
-            onboardingComplete: data.curricula && data.curricula.length > 0,
-          };
-          setUser(user);
-          setView(data.curricula && data.curricula.length > 0 ? 'dashboard' : 'onboarding');
-        } else {
-          toast({
-            title: 'Login failed',
-            description: 'No account found with this email. Please sign up.',
-            variant: 'destructive',
-          });
-        }
-      } catch {
+      if (result?.error || !result?.ok) {
         toast({
-          title: 'Error',
-          description: 'Something went wrong. Please try again.',
+          title: 'Login failed',
+          description: 'Invalid email or password. Please try again.',
           variant: 'destructive',
         });
+        return;
       }
+
+      // Session established — hydrate the real profile from the server
+      const profile = await fetchMyProfile();
+      if (!profile) {
+        toast({
+          title: 'Login failed',
+          description: 'Could not load your profile. Please try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setUser(profile);
+      setView(profile.onboardingComplete ? 'dashboard' : 'onboarding');
+    } catch {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong. Please try again.',
+        variant: 'destructive',
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = () => {
-    // In production, this would redirect to Google OAuth
-    toast({
-      title: 'Google Sign-In',
-      description: 'Google OAuth requires server configuration. Please use email/password for now.',
-    });
+    // Redirects to Google via NextAuth. On return, SessionSync hydrates
+    // the profile and routes to onboarding/dashboard automatically.
+    signIn('google', { callbackUrl: '/' });
   };
 
   return (

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { signIn } from 'next-auth/react';
 import { GraduationCap, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -75,6 +76,15 @@ export function SignupView() {
         userType: data.userType || 'individual',
         onboardingComplete: data.onboardingComplete,
       };
+
+      // Establish a real NextAuth session right away so all
+      // authenticated API calls work during onboarding.
+      try {
+        await signIn('credentials', { email, password, redirect: false });
+      } catch {
+        // Non-fatal: onboarding can still complete; user can sign in later.
+      }
+
       setUser(user);
       setView('onboarding');
       toast({
@@ -93,10 +103,9 @@ export function SignupView() {
   };
 
   const handleGoogleSignup = () => {
-    toast({
-      title: 'Google Sign-Up',
-      description: 'Google OAuth requires server configuration. Please use email/password for now.',
-    });
+    // Google OAuth via NextAuth. Creates the account in the signIn
+    // callback if it doesn't exist; SessionSync routes on return.
+    signIn('google', { callbackUrl: '/' });
   };
 
   return (
