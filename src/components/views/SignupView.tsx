@@ -102,7 +102,24 @@ export function SignupView() {
     }
   };
 
-  const handleGoogleSignup = () => {
+  const handleGoogleSignup = async () => {
+    // Verify the Google provider is actually registered server-side first,
+    // otherwise signIn('google') silently bounces back to the homepage.
+    try {
+      const res = await fetch('/api/auth/providers');
+      const providers = await res.json();
+      if (!providers?.google) {
+        toast({
+          title: 'Google Sign-Up is not configured',
+          description:
+            'Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in your environment, then restart the server. Use email/password for now.',
+          variant: 'destructive',
+        });
+        return;
+      }
+    } catch {
+      // Couldn't check providers — let signIn() handle it.
+    }
     // Google OAuth via NextAuth. Creates the account in the signIn
     // callback if it doesn't exist; SessionSync routes on return.
     signIn('google', { callbackUrl: '/' });
