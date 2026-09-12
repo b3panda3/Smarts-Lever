@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { signIn } from 'next-auth/react';
-import { GraduationCap, ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/card';
 import { useAppStore, type UserProfile } from '@/store/useAppStore';
 import { useToast } from '@/hooks/use-toast';
+import { BrandLogo } from '@/components/BrandLogo';
 
 async function fetchMyProfile(): Promise<UserProfile | null> {
   const res = await fetch('/api/auth/me');
@@ -116,7 +117,7 @@ export function LoginView() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-emerald-50/50 via-background to-amber-50/30">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-emerald-50/50 via-background to-amber-50/30 dark:from-emerald-950/20 dark:via-background dark:to-amber-950/20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -130,9 +131,8 @@ export function LoginView() {
           </Button>
         </div>
 
-        <div className="flex items-center gap-2 mb-6">
-          <GraduationCap className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-gradient">Smarts Lever</span>
+        <div className="flex items-center mb-6">
+          <BrandLogo className="h-12" />
         </div>
 
         <Card>

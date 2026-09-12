@@ -9,11 +9,12 @@ import {
   ArrowRight,
   ChevronDown,
   Sparkles,
-  GraduationCap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useAppStore } from '@/store/useAppStore';
+import { BrandLogo } from '@/components/BrandLogo';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const features = [
   {
@@ -61,11 +62,16 @@ export function LandingView() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-7 w-7 text-primary" />
-            <span className="text-xl font-bold text-gradient">Smarts Lever</span>
-          </div>
-          <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center"
+            aria-label="Smarts Lever home"
+          >
+            <BrandLogo className="h-9" />
+          </button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <Button
               variant="ghost"
               onClick={() => setView('login')}
@@ -125,6 +131,23 @@ export function LandingView() {
                   Learn More
                   <ChevronDown className="ml-2 h-5 w-5" />
                 </Button>
+              </div>
+            </motion.div>
+
+            {/* Cover banner */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+              className="mt-14"
+            >
+              <div className="relative max-w-5xl mx-auto rounded-2xl overflow-hidden border border-border shadow-xl ring-1 ring-black/5 dark:ring-white/10">
+                <img
+                  src="/brand/cover-banner.png"
+                  alt="Smarts Lever — AI-powered vernacular education for West Africa. Pidgin, Yoruba, Hausa, Igbo, Twi, Wolof, Fanti, Bambara and more. Built for Wema Bank Hackaholics 2026, Social Impact Track."
+                  className="w-full h-auto"
+                  draggable={false}
+                />
               </div>
             </motion.div>
 
@@ -329,8 +352,7 @@ export function LandingView() {
       <footer className="border-t border-border py-8 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <GraduationCap className="h-5 w-5 text-primary" />
-            <span className="font-semibold">Smarts Lever</span>
+            <BrandLogo className="h-7" />
           </div>
           <p className="text-sm text-muted-foreground">
             Built for Wema Hackaholics 2026 — Social Impact Track
